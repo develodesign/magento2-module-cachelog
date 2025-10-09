@@ -15,7 +15,7 @@ This module provides a logging mechanism for cache invalidation and cleaning eve
 
 1.  **Require the module using Composer:**
     ```bash
-    composer require develodesign/cache-log
+    composer require develodesign//magento2-module-cachelog
     ```
 
 2.  **Enable the module:**
