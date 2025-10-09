@@ -1,5 +1,5 @@
 {
-    "name": "develodesign/cache-log",
+    "name": "develodesign/magento2-module-cachelog",
     "description": "Module for logging cache cleaning operations",
     "type": "magento2-module",
     "version": "1.0.0",
