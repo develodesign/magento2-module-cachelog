@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Develodesign_CacheLog::cachelog"
+             title="Develodesign"
+             module="Develodesign_CacheLog"
+             sortOrder="100"
+             parent="Magento_Backend::system"
+             resource="Develodesign_CacheLog::cachelog"/>
+        <add id="Develodesign_CacheLog::cachelog_logs"
+             title="Clean Cache Log"
+             module="Develodesign_CacheLog"
+             sortOrder="10"
+             parent="Develodesign_CacheLog::cachelog"
+             action="develodesign_cachelog/index"
+             resource="Develodesign_CacheLog::cachelog_logs"/>
+    </menu>
+</config>

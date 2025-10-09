@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="develodesign_cache_log" resource="default" engine="innodb" comment="Cache Log Table">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="varchar" name="type" nullable="false" length="50" comment="Cache Type (tags or type list)"/>
+        <column xsi:type="varchar" name="cleaned_type" nullable="true" length="50" comment="Cleaned Cache Type"/>
+        <column xsi:type="text" name="cache_tags" nullable="true" comment="Cache Tags (first 100 records)"/>
+        <column xsi:type="int" name="total_records" nullable="true" unsigned="true" comment="Total Records Count"/>
+        <column xsi:type="varchar" name="area" nullable="true" length="30" comment="Area (admin, frontend, cron, etc)"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+</schema>

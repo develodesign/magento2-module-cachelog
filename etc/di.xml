@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\App\Cache\TypeList">
+        <plugin name="develodesign_cachelog_cachetype_plugin"
+                type="Develodesign\CacheLog\Model\Plugin\CacheTypeList"/>
+    </type>
+
+    <!-- Plugin for CachePurge logging -->
+    <type name="Magento\CacheInvalidate\Model\PurgeCache">
+        <plugin name="develodesign_cachelog_plugin" type="Develodesign\CacheLog\Model\Plugin\CachePurgeLogger" sortOrder="10" />
+    </type>
+</config>
