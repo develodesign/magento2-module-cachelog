@@ -10,6 +10,8 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Ui\Component\MassAction\Filter;
 use Develodesign\CacheLog\Model\ResourceModel\CacheLog\CollectionFactory;
+use Magento\Framework\Exception\LocalizedException;
+use Psr\Log\LoggerInterface;
 
 class MassDelete extends Action
 {
@@ -24,17 +26,25 @@ class MassDelete extends Action
     protected $collectionFactory;
 
     /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * @param Context $context
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory
+     * @param LoggerInterface $logger
      */
     public function __construct(
         Context $context,
         Filter $filter,
-        CollectionFactory $collectionFactory
+        CollectionFactory $collectionFactory,
+        LoggerInterface $logger
     ) {
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
+        $this->logger = $logger;
         parent::__construct($context);
     }
 
@@ -46,14 +56,43 @@ class MassDelete extends Action
      */
     public function execute()
     {
-        $collection = $this->filter->getCollection($this->collectionFactory->create());
-        $collectionSize = $collection->getSize();
+        $deletedCount = 0;
 
-        foreach ($collection as $item) {
-            $item->delete();
+        try {
+            $collection = $this->filter->getCollection($this->collectionFactory->create());
+            $collectionSize = $collection->getSize();
+
+            if ($collectionSize) {
+                $ids = $collection->getAllIds();
+
+                if (!empty($ids)) {
+                    $connection = $collection->getConnection();
+                    $deletedCount = $connection->delete(
+                        $collection->getMainTable(),
+                        ['entity_id IN (?)' => $ids]
+                    );
+                }
+            }
+
+            if ($deletedCount) {
+                $this->messageManager->addSuccessMessage(
+                    __('A total of %1 record(s) have been deleted.', $deletedCount)
+                );
+            } else {
+                $this->messageManager->addWarningMessage(
+                    __('No records were deleted.')
+                );
+            }
+
+        } catch (LocalizedException $e) {
+            $this->messageManager->addErrorMessage($e->getMessage());
+            $this->logger->error('Cache log mass delete error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            $this->messageManager->addErrorMessage(
+                __('An error occurred while deleting cache log records.')
+            );
+            $this->logger->critical('Cache log mass delete critical error: ', ['exception' => $e]);
         }
-
-        $this->messageManager->addSuccessMessage(__('A total of %1 record(s) have been deleted.', $collectionSize));
 
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
