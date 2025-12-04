@@ -40,6 +40,11 @@ class CacheTagsClean implements ObserverInterface
     private $tagResolver;
 
     /**
+     * @var Registry
+     */
+    private $registry;
+    
+    /**
      * @var Helper
      */
     private $coreHelper;
