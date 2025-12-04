@@ -53,8 +53,8 @@ class Data extends AbstractHelper
      */
     public function __construct(
         Context $context,
-        State $appState = null,
-        ScheduleCollection $scheduleCollection = null
+        ?State $appState = null,
+        ?ScheduleCollection $scheduleCollection = null
     ) {
         $this->scopeConfig = $context->getScopeConfig();
         // Use ObjectManager for backward compatibility if parameters are not provided
