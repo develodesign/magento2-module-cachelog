@@ -2,6 +2,9 @@
 
 This module provides a logging mechanism for cache invalidation and cleaning events in Magento 2. It helps developers and administrators track when, how, and from where the cache is being flushed, which is invaluable for debugging complex caching issues, especially those related to Varnish and third-party integrations.
 
+<img width="2202" height="1113" alt="Screenshot 2025-10-09 at 12 55 45 (1)" src="https://github.com/user-attachments/assets/d16e0883-fd09-4db5-9cf0-a136d870edc0" />
+
+
 ## Features
 
 - Logs cache cleaning events to a dedicated database table.
