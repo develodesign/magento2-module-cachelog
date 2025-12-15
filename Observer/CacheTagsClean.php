@@ -55,11 +55,6 @@ class CacheTagsClean implements ObserverInterface
     private $logger;
 
     /**
-     * @var Registry
-     */
-    private $registry;
-
-    /**
      * set cache tags to debug file paths and methods
      *
      * @var string[]
